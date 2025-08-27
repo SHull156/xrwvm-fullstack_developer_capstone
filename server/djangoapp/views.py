@@ -8,12 +8,14 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 
+
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate, logout as auth_logout
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
-# from .populate import initiate
+from .models import CarMake, CarModel
+from .populate import initiate
 
 
 # Get an instance of a logger
@@ -75,6 +77,21 @@ def registration(request):
     else :
         data = {"userName":username,"error":"Already Registered"}
         return JsonResponse(data)
+
+def get_cars(request):
+    count = CarMake.objects.filter().count()
+    if count == 0:
+        initiate()
+    
+    # Get all CarModel objects
+    car_models = CarModel.objects.all()
+
+    # Option 1: explicitly get only the name field for each car model
+    cars = [car_model.name for car_model in car_models]  
+
+    return JsonResponse({"CarModels": cars})
+
+
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
