@@ -106,29 +106,47 @@ def get_dealerships(request, state="All"):
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, dealer_id):
-    if(dealer_id):
-        endpoint = "/fetchDealer/"+str(dealer_id)
+    if dealer_id:
+        endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status":200,"dealer":dealership})
+        if dealership is None:
+            return JsonResponse({"status": 500, "dealer": {}, "message": "Failed to fetch dealer"})
+        
+        # Make sure JSON matches what React expects
+        dealer_data = {
+            "id": dealership.get("id", dealer_id),
+            "full_name": dealership.get("full_name", ""),
+            "city": dealership.get("city", ""),
+            "state": dealership.get("state", ""),
+            "st": dealership.get("st", ""),
+            "address": dealership.get("address", ""),
+            "zip": dealership.get("zip", ""),
+            "lat": dealership.get("lat", 0),
+            "long": dealership.get("long", 0),
+        }
+        return JsonResponse({"status": 200, "dealer": dealer_data})
     else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 # Create a `add_review` view to submit a review
 # def add_review(request):
 # ...
 
 def get_dealer_reviews(request, dealer_id):
-    # if dealer id has been provided
-    if(dealer_id):
-        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+    if dealer_id:
+        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
-            print(response)
-            review_detail['sentiment'] = response['sentiment']
-        return JsonResponse({"status":200,"reviews":reviews})
+            # Safely handle if analyzer failed
+            if response is None or 'sentiment' not in response:
+                review_detail['sentiment'] = "unknown"
+            else:
+                review_detail['sentiment'] = response['sentiment']
+        return JsonResponse({"status": 200, "reviews": reviews})
     else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        return JsonResponse({"status": 400, "message": "Bad Request"})
 
 def add_review(request):
     if(request.user.is_anonymous == False):
