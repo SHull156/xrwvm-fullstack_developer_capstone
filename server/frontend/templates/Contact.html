@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us - Best Cars Dealership</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script>
+      const logout = async (e) => {
+        // Include your logout logic here
+      };
+
+      let checkSession = () => {
+        let curr_user = sessionStorage.getItem("username");
+        if (curr_user && curr_user !== "") {
+          document.getElementById("loginlogout").innerHTML =
+            '<span class="homepage_links">' + curr_user + '</span>' +
+            '<a class="homepage_links" onclick="logout()" href="/">Logout</a>';
+        } else {
+          document.getElementById("loginlogout").innerHTML =
+            '<a class="homepage_links" href="/login">Login</a>' +
+            '<a class="homepage_links" href="/register">Register</a>';
+        }
+      }
+    </script>
+</head>
+<body onload="checkSession()">
+<div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+    <div class="container-fluid">
+      <h2 style="padding-right: 5%;">Dealerships</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" href="{% url 'about' %}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" style="font-size: larger;" href="{% url 'contact' %}">Contact Us</a>
+          </li>
+        </ul>
+        <!-- Login/Register area -->
+        <span class="navbar-text">
+          <div class="loginlink" id="loginlogout"></div>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact Section -->
+  <div class="card" style="width: 60%; margin: 50px auto; padding: 30px; background-color: #fff; border-radius: 10px;">
+    <h1 style="color: darkturquoise; text-align:center;">Contact Us</h1>
+
+    <div class="contact-info" style="margin-top: 20px;">
+      <h2>Phone</h2>
+      <p>07978 407081</p>
+
+      <h2>Email</h2>
+      <p>test@email.com</p>
+
+      <h2>Address</h2>
+      <p>123 Dealership Street</p>
+
+      <img src="{% static 'showroom.jpg' %}" alt="Showroom Image" style="width:100%; height:auto; margin-top:20px; border-radius:10px;">
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -16,6 +16,9 @@ ALLOWED_HOSTS = [
     'sarahhull-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 
+# Automatically append trailing slashes to URLs
+APPEND_SLASH = True
+
 CSRF_TRUSTED_ORIGINS = [
     'https://sarahhull-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
@@ -42,12 +45,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'djangoproj.urls'
 
-# Templates - React build integration
+# Templates - React build + classic static HTML integration
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/build'),
+            os.path.join(BASE_DIR, 'frontend', 'templates'),  # HTML + images
+            os.path.join(BASE_DIR, 'frontend', 'build'),      # React build
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -60,6 +64,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'djangoproj.wsgi.application'
 
@@ -90,8 +95,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),  # React static folder
-    os.path.join(BASE_DIR, 'frontend', 'build'),           # Include build root for manifest.json
+    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),  # React static
+    os.path.join(BASE_DIR, 'frontend', 'build'),            # React build root
+    os.path.join(BASE_DIR, 'frontend', 'templates'),        # Original HTML + images
 ]
 
 # Media files (optional)

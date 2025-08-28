@@ -27,7 +27,9 @@ def get_request(endpoint, **kwargs):
         return None
 
 def analyze_review_sentiments(text):
-    request_url = sentiment_analyzer_url + "analyze/" + text
+    # Minimal change: remove trailing slash if present
+    base_url = sentiment_analyzer_url.rstrip("/")
+    request_url = base_url + "/analyze/" + text
     try:
         response = requests.get(request_url)
         if response.status_code == 200:

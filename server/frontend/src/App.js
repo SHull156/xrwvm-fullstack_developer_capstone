@@ -5,10 +5,10 @@ import Dealers from './components/Dealers/Dealers';
 import Dealer from './components/Dealers/Dealer';
 import PostReview from "./components/Dealers/PostReview";
 
-
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<div>Welcome to Dealership App</div>} />
       <Route path="/login" element={<LoginPanel />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dealers" element={<Dealers/>} />
@@ -17,4 +17,5 @@ function App() {
     </Routes>
   );
 }
+
 export default App;

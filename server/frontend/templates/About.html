@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - Best Cars Dealership</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script>
+      const logout = async (e) => {
+        // Include your logout logic here
+      };
+
+      let checkSession = () => {
+        let curr_user = sessionStorage.getItem("username");
+        if (curr_user && curr_user !== "") {
+          document.getElementById("loginlogout").innerHTML =
+            '<span class="homepage_links">' + curr_user + '</span>' +
+            '<a class="homepage_links" onclick="logout()" href="/">Logout</a>';
+        } else {
+          document.getElementById("loginlogout").innerHTML =
+            '<a class="homepage_links" href="/login">Login</a>' +
+            '<a class="homepage_links" href="/register">Register</a>';
+        }
+      }
+    </script>
+</head>
+<body onload="checkSession()">
+<div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+    <div class="container-fluid">
+      <h2 style="padding-right: 5%;">Dealerships</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" style="font-size: larger;" href="{% url 'about' %}">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" href="{% url 'contact' %}">Contact Us</a>
+          </li>
+        </ul>
+        <!-- Login/Register area -->
+        <span class="navbar-text">
+          <div class="loginlink" id="loginlogout"></div>
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <div class="card" style="width: 80%; margin: auto; margin-top:5%;">
+    <p>TEST: About page loaded</p>
+    <div class="banner" name="about-header">
+      <h1>About Us</h1>
+      <p>Welcome to Best Cars dealership, home to the best cars in North America. We deal in sale of domestic and imported cars at reasonable prices.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 20px;">
+      <div class="card" style="width: 30%;">
+        <img class="card-img-top" src="{% static 'woman.jpg' %}" alt="Ella Bowman">
+        <div class="card-body">
+          <p class="title">Ella Bowman</p>
+          <p>Sales Director</p>
+          <p class="card-text">Based in London.</p>
+          <p>ebowman@example.com</p>
+        </div>
+      </div>
+      <div class="card" style="width: 30%;">
+        <img class="card-img-top" src="{% static 'woman2.jpg' %}" alt="Kathy Hill">
+        <div class="card-body">
+          <p class="title">Kathy Hill</p>
+          <p>Sales Associate</p>
+          <p class="card-text">Based in Leeds.</p>
+          <p>khill@example.com</p>
+        </div>
+      </div>
+      <div class="card" style="width: 30%;">
+        <img class="card-img-top" src="{% static 'woman3.jpg' %}" alt="Lisa Moragan">
+        <div class="card-body">
+          <p class="title">Lisa Moragan</p>
+          <p>Sales Manager</p>
+          <p class="card-text">Based in Hull.</p>
+          <p>lmorgan@example.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

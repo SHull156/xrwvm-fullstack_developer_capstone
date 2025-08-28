@@ -8,6 +8,10 @@ import negative_icon from "../assets/negative.png";
 import review_icon from "../assets/reviewbutton.png";
 import Header from '../Header/Header';
 
+import { backend_url, sentiment_analyzer_url } from '../../config';
+
+
+
 const Dealer = () => {
   const [dealer, setDealer] = useState(null);
   const [reviews, setReviews] = useState([]);

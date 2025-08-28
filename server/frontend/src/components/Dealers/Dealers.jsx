@@ -3,6 +3,8 @@ import "./Dealers.css";
 import "../assets/style.css";
 import Header from '../Header/Header';
 import review_icon from "../assets/reviewicon.png"
+import { backend_url, sentiment_analyzer_url } from '../../config';
+
 
 const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);
