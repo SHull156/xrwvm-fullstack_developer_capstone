@@ -5,11 +5,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', default="http://localhost:3030")
-# Updated sentiment analyzer URL
+    'backend_url',
+    default="http://localhost:3030"
+)
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
-    default="https://sentianalyzer.1zlbgu0pcp4y.us-south.codeengine.appdomain.cloud/")
+    default=(
+        "https://sentianalyzer.1zlbgu0pcp4y.us-south.codeengine."
+        "appdomain.cloud/"
+    )
+)
+
 
 def get_request(endpoint, **kwargs):
     params = ""
@@ -26,21 +32,20 @@ def get_request(endpoint, **kwargs):
         print(f"Network exception occurred: {err}")
         return None
 
+
 def analyze_review_sentiments(text):
-    # Minimal change: remove trailing slash if present
     base_url = sentiment_analyzer_url.rstrip("/")
     request_url = base_url + "/analyze/" + text
     try:
         response = requests.get(request_url)
         if response.status_code == 200:
             return response.json()
-        else:
-            print(f"Analyzer returned status {response.status_code}")
-            return {"sentiment": "unknown"}
+        print(f"Analyzer returned status {response.status_code}")
+        return {"sentiment": "unknown"}
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
-        print("Network exception occurred")
         return {"sentiment": "unknown"}
+
 
 def post_review(data_dict):
     request_url = backend_url + "/insert_review"
